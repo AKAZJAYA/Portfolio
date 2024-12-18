@@ -14,7 +14,34 @@ const HomeIcon = () => (
 const UserIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-    <circle cx="12" cy="7" r="4"/>
+    <circle cx="12" cy="7" r="4"/>    <nav className="bg-white shadow-lg fixed w-full z-10">
+      <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="flex items-center">
+          {/* Existing navigation links */}
+          <a href="#home" className="flex items-center hover:text-blue-600">
+            <HomeIcon /> Home
+          </a>
+          <a href="#about" className="flex items-center hover:text-blue-600">
+            <UserIcon /> About
+          </a>
+          <a href="#projects" className="flex items-center hover:text-blue-600">
+            <BriefcaseIcon /> Projects
+          </a>
+          <a href="#contact" className="flex items-center hover:text-blue-600">
+            <MailIcon /> Contact
+          </a>
+        </div>
+        <div>
+          <a 
+            href="/path/to/cv.pdf" 
+            download 
+            className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Download My CV
+          </a>
+        </div>
+      </div>
+    </nav>
   </svg>
 );
 
