@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import profileImage from './profile.jpeg';
+import logo from './logo1.png'
 import AOS from "aos";
+// import { FaDownload } from 'react-icons/fa';
 import "aos/dist/aos.css";
 
 // Simple SVG Icons
@@ -11,44 +13,25 @@ const HomeIcon = () => (
   </svg>
 );
 
+const DownloadIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" x2="12" y1="15" y2="3"/>
+  </svg>
+);
+
 const UserIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-    <circle cx="12" cy="7" r="4"/>    <nav className="bg-white shadow-lg fixed w-full z-10">
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex items-center">
-          {/* Existing navigation links */}
-          <a href="#home" className="flex items-center hover:text-blue-600">
-            <HomeIcon /> Home
-          </a>
-          <a href="#about" className="flex items-center hover:text-blue-600">
-            <UserIcon /> About
-          </a>
-          <a href="#projects" className="flex items-center hover:text-blue-600">
-            <BriefcaseIcon /> Projects
-          </a>
-          <a href="#contact" className="flex items-center hover:text-blue-600">
-            <MailIcon /> Contact
-          </a>
-        </div>
-        <div>
-          <a 
-            href="/path/to/cv.pdf" 
-            download 
-            className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
-          >
-            Download My CV
-          </a>
-        </div>
-      </div>
-    </nav>
+    <circle cx="12" cy="7" r="4"/>
   </svg>
 );
 
 const BriefcaseIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+    <path d="M16 3h-4v4h4V3z"/>
   </svg>
 );
 
@@ -94,8 +77,10 @@ const LoadingSpinner = () => (
 
 const PersonalPortfolio = () => {
   useEffect(() => {
+    document.title = 'Akash Jayasinghe | Portfolio';
+
     AOS.init({
-      duration: 1000,
+      duration: 500,
     });
   }, []);
 
@@ -184,11 +169,12 @@ const PersonalPortfolio = () => {
   };
 
   return (
+    
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
         <div className="container mx-auto flex justify-between items-center p-4">
-          <div className="text-2xl font-bold">{personalInfo.name}</div>
+          <img src={logo} alt="logo" className="w-16 h-13 rounded-full" />
           <div className="flex space-x-6">
             <a href="#home" className="flex items-center hover:text-blue-600">
               <HomeIcon /> Home
@@ -201,6 +187,15 @@ const PersonalPortfolio = () => {
             </a>
             <a href="#contact" className="flex items-center hover:text-blue-600">
               <MailIcon /> Contact
+            </a>
+            <a 
+              href="https://mysliit-my.sharepoint.com/:b:/g/personal/it22228062_my_sliit_lk/ETVBCu-61P1KtMQj6vn-hg0BEbdcY2GcBBDRfQ3lh_w75Q?e=XQ8ioK" 
+              download="AkashJayasignhe.pdf" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center hover:text-teal-500 text-blue-400"
+            >
+              <DownloadIcon className="w-5 h-5 mr-1" /> Download My CV
             </a>
           </div>
         </div>
