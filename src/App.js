@@ -80,7 +80,7 @@ const PersonalPortfolio = () => {
     document.title = 'Akash Jayasinghe | Portfolio';
 
     AOS.init({
-      duration: 500,
+      duration: 1000,
     });
   }, []);
 
