@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import profileImage from './profile.jpeg';
 import logo from './logo1.png'
 import AOS from "aos";
@@ -76,6 +76,13 @@ const LoadingSpinner = () => (
 );
 
 const PersonalPortfolio = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Add this at the beginning of the component
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   useEffect(() => {
     document.title = 'Akash Jayasinghe | Portfolio';
 
@@ -172,44 +179,111 @@ const PersonalPortfolio = () => {
     
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
-        <div className="container mx-auto flex justify-between items-center p-4">
-          <img src={logo} alt="logo" className="w-16 h-13 rounded-full" />
-          <div className="flex space-x-6">
-            <a href="#home" className="flex items-center hover:text-blue-600">
-              <HomeIcon /> Home
-            </a>
-            <a href="#about" className="flex items-center hover:text-blue-600">
-              <UserIcon /> About
-            </a>
-            <a href="#projects" className="flex items-center hover:text-blue-600">
-              <BriefcaseIcon /> Projects
-            </a>
-            <a href="#contact" className="flex items-center hover:text-blue-600">
-              <MailIcon /> Contact
-            </a>
-            <a 
-              href="https://mysliit-my.sharepoint.com/:b:/g/personal/it22228062_my_sliit_lk/ETVBCu-61P1KtMQj6vn-hg0BEbdcY2GcBBDRfQ3lh_w75Q?e=XQ8ioK" 
-              download="AkashJayasignhe.pdf" 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center hover:text-teal-500 text-blue-400"
+      <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <img src={logo} alt="logo" className="w-12 h-10 md:w-16 md:h-13 rounded-full" />
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#home" className="flex items-center hover:text-blue-600 text-gray-700">
+                <HomeIcon className="mr-2" /> Home
+              </a>
+              <a href="#about" className="flex items-center hover:text-blue-600 text-gray-700">
+                <UserIcon className="mr-2" /> About
+              </a>
+              <a href="#projects" className="flex items-center hover:text-blue-600 text-gray-700">
+                <BriefcaseIcon className="mr-2" /> Projects
+              </a>
+              <a href="#contact" className="flex items-center hover:text-blue-600 text-gray-700">
+                <MailIcon className="mr-2" /> Contact
+              </a>
+              <a 
+                href="https://mysliit-my.sharepoint.com/:b:/g/personal/it22228062_my_sliit_lk/ETVBCu-61P1KtMQj6vn-hg0BEbdcY2GcBBDRfQ3lh_w75Q?e=XQ8ioK" 
+                download="AkashJayasignhe.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center hover:text-teal-500 text-blue-400"
+              >
+                <DownloadIcon className="mr-2" /> Download CV
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center">
+              <button 
+                onClick={toggleMenu}
+                className="p-2 rounded-lg hover:bg-gray-100"
+                aria-label="Toggle menu"
+              >
+                <svg 
+                  className="w-6 h-6" 
+                  fill="none" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  {isMenuOpen ? (
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
+
+            {/* Mobile menu */}
+            <div 
+              className={`
+                absolute top-full left-0 w-full bg-white shadow-md md:hidden
+                transition-all duration-300 ease-in-out
+                ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
+              `}
             >
-              <DownloadIcon className="w-5 h-5 mr-1" /> Download My CV
-            </a>
+              <div className="flex flex-col p-4">
+                {[
+                  { href: "#home", icon: <HomeIcon />, text: "Home" },
+                  { href: "#about", icon: <UserIcon />, text: "About" },
+                  { href: "#projects", icon: <BriefcaseIcon />, text: "Projects" },
+                  { href: "#contact", icon: <MailIcon />, text: "Contact" },
+                  { 
+                    href: "https://mysliit-my.sharepoint.com/:b:/g/personal/it22228062_my_sliit_lk/ETVBCu-61P1KtMQj6vn-hg0BEbdcY2GcBBDRfQ3lh_w75Q?e=XQ8ioK",
+                    icon: <DownloadIcon />, 
+                    text: "Download CV",
+                    isExternal: true
+                  }
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="flex items-center px-4 py-3 hover:bg-gray-50 rounded-lg text-gray-700 hover:text-blue-600"
+                    {...(item.isExternal ? {
+                      target: "_blank",
+                      rel: "noopener noreferrer"
+                    } : {})}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="mr-3">{item.icon}</span>
+                    {item.text}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header id="home" className="pt-24 pb-16 text-center bg-gradient-to-r from-indigo-800 via-teal-500 to-teal-400 text-white">
+      <header id="home" className="pt-24 md:pt-32 pb-16 text-center bg-gradient-to-r from-indigo-800 via-teal-500 to-teal-400 text-white">
         <div className="container mx-auto px-4">
-          <h1 className="text-6xl font-bold mb-4 text-shadow">{personalInfo.name}</h1>
-          <h2 className="text-3xl text-gray-100 mb-8">{personalInfo.title}</h2>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-shadow">{personalInfo.name}</h1>
+          <h2 className="text-2xl md:text-3xl text-gray-100 mb-8">{personalInfo.title}</h2>
           <img 
             src={profileImage} 
             alt="Profile" 
-            className="mx-auto rounded-full w-56 h-56 object-cover mb-8 shadow-lg border-4 border-white"
+            className="mx-auto rounded-full w-40 h-40 md:w-56 md:h-56 object-cover mb-8 shadow-lg border-4 border-white"
           />
         </div>
       </header>
@@ -270,7 +344,7 @@ const PersonalPortfolio = () => {
       <section id="projects" className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Projects</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {personalInfo.projects.map((project, index) => (
               <div 
                 key={index} 
@@ -313,95 +387,52 @@ const PersonalPortfolio = () => {
       <section id="skills" className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Technical Skills</h2>
-          <div className="flex justify-center gap-8 mt-8">
-            {/* React */}
-            <div className="w-1/4 text-center">
-              <img 
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" 
-                alt="React Logo" 
-                className="mx-auto mb-4 w-24 h-24" 
-              />
-              <p className="text-xl font-medium text-teal-500">React</p>
-              <div className="relative pt-1">
-                <div className="flex mb-2 items-center justify-between">
-                  <span className="text-xs font-semibold inline-block py-1 uppercase">90%</span>
+          <div className="overflow-x-auto pb-4 -mx-4 px-4">
+            <div className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-6 min-w-max md:min-w-0">
+              {[
+                { name: 'React', percent: '90', icon: techIcons.React },
+                { name: 'JavaScript', percent: '95', icon: techIcons.JavaScript },
+                { name: 'Node.js', percent: '85', icon: techIcons.Node },
+                { name: 'MongoDB', percent: '80', icon: techIcons.MongoDB },
+                { name: 'TypeScript', percent: '85', icon: techIcons.TypeScript },
+                { name: 'HTML', percent: '90', icon: techIcons.HTML },
+                { name: 'CSS', percent: '85', icon: techIcons.CSS },
+                { name: 'Git', percent: '88', icon: techIcons.Git },
+                { name: 'Firebase', percent: '82', icon: techIcons.Firebase },
+                { name: 'Android', percent: '75', icon: techIcons.Android }
+              ].map((skill, index) => (
+                <div key={index} className="flex-shrink-0 w-60 md:w-auto text-center bg-white rounded-lg p-6 shadow-md">
+                  <img 
+                    src={skill.icon}
+                    alt={`${skill.name} Logo`} 
+                    className="mx-auto mb-4 w-16 h-16 md:w-20 md:h-20" 
+                  />
+                  <p className="text-xl font-medium text-teal-500">{skill.name}</p>
+                  <div className="relative pt-1">
+                    <div className="flex mb-2 items-center justify-between">
+                      <span className="text-xs font-semibold inline-block py-1 uppercase">
+                        {skill.percent}%
+                      </span>
+                    </div>
+                    <div className="relative w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="progress-bar bg-teal-500 h-2 rounded-full" 
+                        style={{ width: `${skill.percent}%` }}
+                      ></div>
+                    </div>
+                  </div>
                 </div>
-                <div className="relative flex-1 flex-grow w-full bg-gray-200 rounded-full">
-                  <div className="progress-bar bg-teal-500 h-2 rounded-full" style={{ width: "90%" }}></div>
-                </div>
-              </div>
+              ))}
             </div>
-
-            {/* Node.js */}
-            <div className="w-1/4 text-center">
-              <img 
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" 
-                alt="Node.js Logo" 
-                className="mx-auto mb-4 w-24 h-24" 
-              />
-              <p className="text-xl font-medium text-teal-500">Node.js</p>
-              <div className="relative pt-1">
-                <div className="flex mb-2 items-center justify-between">
-                  <span className="text-xs font-semibold inline-block py-1 uppercase">85%</span>
-                </div>
-                <div className="relative flex-1 flex-grow w-full bg-gray-200 rounded-full">
-                  <div className="progress-bar bg-teal-500 h-2 rounded-full" style={{ width: "85%" }}></div>
-                </div>
-              </div>
-            </div>
-
-            {/* JavaScript */}
-            <div className="w-1/4 text-center">
-              <img 
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
-                alt="JavaScript Logo" 
-                className="mx-auto mb-4 w-24 h-24" 
-              />
-              <p className="text-xl font-medium text-teal-500">JavaScript</p>
-              <div className="relative pt-1">
-                <div className="flex mb-2 items-center justify-between">
-                  <span className="text-xs font-semibold inline-block py-1 uppercase">95%</span>
-                </div>
-                <div className="relative flex-1 flex-grow w-full bg-gray-200 rounded-full">
-                  <div className="progress-bar bg-teal-500 h-2 rounded-full" style={{ width: "95%" }}></div>
-                </div>
-              </div>
-            </div>
-
-            {/* CSS */}
-            <div className="w-1/4 text-center">
-              <img 
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
-                alt="CSS Logo" 
-                className="mx-auto mb-4 w-24 h-24" 
-              />
-              <p className="text-xl font-medium text-teal-500">CSS</p>
-              <div className="relative pt-1">
-                <div className="flex mb-2 items-center justify-between">
-                  <span className="text-xs font-semibold inline-block py-1 uppercase">85%</span>
-                </div>
-                <div className="relative flex-1 flex-grow w-full bg-gray-200 rounded-full">
-                  <div className="progress-bar bg-teal-500 h-2 rounded-full" style={{ width: "85%" }}></div>
-                </div>
-              </div>
-            </div>
-
-            {/* HTML */}
-            <div className="w-1/4 text-center">
-              <img 
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
-                alt="HTML Logo" 
-                className="mx-auto mb-4 w-24 h-24" 
-              />
-              <p className="text-xl font-medium text-teal-500">HTML</p>
-              <div className="relative pt-1">
-                <div className="flex mb-2 items-center justify-between">
-                  <span className="text-xs font-semibold inline-block py-1 uppercase">90%</span>
-                </div>
-                <div className="relative flex-1 flex-grow w-full bg-gray-200 rounded-full">
-                  <div className="progress-bar bg-teal-500 h-2 rounded-full" style={{ width: "90%" }}></div>
-                </div>
-              </div>
+          </div>
+          
+          {/* Mobile scroll indicator */}
+          <div className="flex md:hidden justify-center mt-4">
+            <div className="text-sm text-gray-500 flex items-center">
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              Scroll to see more
             </div>
           </div>
         </div>
@@ -411,7 +442,7 @@ const PersonalPortfolio = () => {
       <section id="contact" className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Contact Me</h2>
-          <div className="flex justify-center space-x-6 social-icons">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 social-icons">
             <a 
               href={`mailto:${personalInfo.contact.email}`} 
               className="text-gray-700 hover:text-blue-600"
@@ -419,28 +450,32 @@ const PersonalPortfolio = () => {
               <MailIcon />
             </a>
             <a 
-              href={`https://www.facebook.com/${personalInfo.contact.facebook}`} 
+              href={personalInfo.contact.facebook}
+              target="_blank"
+              rel="noopener noreferrer" 
               className="text-gray-700 hover:text-blue-600"
             >
               <FacebookIcon />
             </a>
             <a 
-              href={`https://www.instagram.com/${personalInfo.contact.instagram}`} 
+              href={personalInfo.contact.instagram}
+              target="_blank"
+              rel="noopener noreferrer" 
               className="text-gray-700 hover:text-blue-600"
             >
               <InstagramIcon />
             </a>
             <a 
-              href={personalInfo.contact.github} 
-              target="_blank" 
+              href={personalInfo.contact.github}
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-blue-600"
             >
               <GitHubIcon />
             </a>
             <a 
-              href={personalInfo.contact.linkedin} 
-              target="_blank" 
+              href={personalInfo.contact.linkedin}
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-blue-600"
             >
@@ -455,7 +490,6 @@ const PersonalPortfolio = () => {
           ↑
         </button>
       </section>
-      
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-10 mt-12">
