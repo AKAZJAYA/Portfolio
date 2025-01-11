@@ -390,37 +390,24 @@ const PersonalPortfolio = () => {
           <div className="overflow-x-auto pb-4 -mx-4 px-4">
             <div className="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-6 min-w-max md:min-w-0">
               {[
-                { name: 'React', percent: '90', icon: techIcons.React },
-                { name: 'JavaScript', percent: '95', icon: techIcons.JavaScript },
-                { name: 'Node.js', percent: '85', icon: techIcons.Node },
-                { name: 'MongoDB', percent: '80', icon: techIcons.MongoDB },
-                { name: 'TypeScript', percent: '85', icon: techIcons.TypeScript },
-                { name: 'HTML', percent: '90', icon: techIcons.HTML },
-                { name: 'CSS', percent: '85', icon: techIcons.CSS },
-                { name: 'Git', percent: '88', icon: techIcons.Git },
-                { name: 'Firebase', percent: '82', icon: techIcons.Firebase },
-                { name: 'Android', percent: '75', icon: techIcons.Android }
+                { name: 'React', icon: techIcons.React },
+                { name: 'JavaScript', icon: techIcons.JavaScript },
+                { name: 'Node.js', icon: techIcons.Node },
+                { name: 'MongoDB', icon: techIcons.MongoDB },
+                { name: 'TypeScript', icon: techIcons.TypeScript },
+                { name: 'HTML', icon: techIcons.HTML },
+                { name: 'CSS', icon: techIcons.CSS },
+                { name: 'Git', icon: techIcons.Git },
+                { name: 'Firebase', icon: techIcons.Firebase },
+                { name: 'Android', icon: techIcons.Android }
               ].map((skill, index) => (
-                <div key={index} className="flex-shrink-0 w-60 md:w-auto text-center bg-white rounded-lg p-6 shadow-md">
+                <div key={index} className="flex-shrink-0 w-48 md:w-auto text-center bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
                   <img 
                     src={skill.icon}
                     alt={`${skill.name} Logo`} 
                     className="mx-auto mb-4 w-16 h-16 md:w-20 md:h-20" 
                   />
                   <p className="text-xl font-medium text-teal-500">{skill.name}</p>
-                  <div className="relative pt-1">
-                    <div className="flex mb-2 items-center justify-between">
-                      <span className="text-xs font-semibold inline-block py-1 uppercase">
-                        {skill.percent}%
-                      </span>
-                    </div>
-                    <div className="relative w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="progress-bar bg-teal-500 h-2 rounded-full" 
-                        style={{ width: `${skill.percent}%` }}
-                      ></div>
-                    </div>
-                  </div>
                 </div>
               ))}
             </div>
